@@ -1,0 +1,31 @@
+
+*.o
+*.obj
+*.exe
+*.out
+*.app
+
+# 依赖文件
+*.d
+*.dll
+*.so
+*.so.*
+*.dylib
+
+# 静态库
+*.a
+*.lib
+
+# 调试文件
+*.pdb
+*.idb
+*.ilk
+*.db
+
+# 构建目录
+build/
+Debug/
+
+#QT
+*.user
+

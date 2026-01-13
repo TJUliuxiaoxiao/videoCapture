@@ -1,0 +1,1180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>FFCapWindow</class>
+ <widget class="QWidget" name="FFCapWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>645</width>
+    <height>558</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>0</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QLabel {
+    border: none;
+    font: bold 30px &quot;Microsoft YaHei UI&quot;;
+	color:#A0A0A0;
+    background-color: transparent;
+}    </string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QWidget" name="headerWidget" native="true">
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>42</height>
+      </size>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Orientation::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>58</width>
+            <height>17</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QLabel" name="titleLab">
+          <property name="styleSheet">
+           <string notr="true">QLabel {
+    border: none;
+    font: bold 20px &quot;Microsoft YaHei UI&quot;;
+	color:#A0A0A0;
+    background-color: transparent;
+}    </string>
+          </property>
+          <property name="text">
+           <string>录屏推流平台</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Orientation::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>188</width>
+            <height>17</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <widget class="QPushButton" name="minimizeWindow">
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset theme="QIcon::ThemeIcon::ListRemove"/>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="maximizeWindow">
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset theme="QIcon::ThemeIcon::MediaPlaybackStop"/>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="closeBtn">
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset theme="QIcon::ThemeIcon::ApplicationExit"/>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QWidget" name="centerWidget" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>300</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>550</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QWidget{
+	background-color:#13141A;
+}</string>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="1,8,1">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <spacer name="horizontalSpacer_3">
+        <property name="orientation">
+         <enum>Qt::Orientation::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>49</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_2" stretch="10,1">
+        <property name="spacing">
+         <number>5</number>
+        </property>
+        <property name="leftMargin">
+         <number>5</number>
+        </property>
+        <property name="topMargin">
+         <number>5</number>
+        </property>
+        <property name="rightMargin">
+         <number>5</number>
+        </property>
+        <property name="bottomMargin">
+         <number>5</number>
+        </property>
+        <item>
+         <widget class="QOpenGLWidget" name="GLRendderWidget">
+          <property name="minimumSize">
+           <size>
+            <width>400</width>
+            <height>200</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Orientation::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>10</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_4">
+        <property name="orientation">
+         <enum>Qt::Orientation::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>49</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QWidget" name="configWidget" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>120</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QWidget{
+	background-color:#333333;
+}</string>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_5">
+      <item>
+       <widget class="QWidget" name="ModeWidget" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>200</width>
+          <height>200</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QWidget{
+	background-color:#272A33;
+	border:0px;
+	border-radius:5px;
+	
+}</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>6</number>
+         </property>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_6">
+           <item>
+            <widget class="QLabel" name="modeLab">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;模式选择&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_7">
+           <item>
+            <widget class="QRadioButton" name="captureRadioButton">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QRadioButton {
+    border: 1px solid;
+    font: bold 9px &quot;Microsoft YaHei UI&quot;;
+	border-radius:3px;
+    color: #A0A0A0;
+    background-color: transparent;
+    padding: 4px;
+    margin: 2px;
+}
+
+/* 复选框指示器（未选中状态） */
+QRadioButton::indicator {
+    width: 12px;
+    height: 12px;
+    border: 2px solid #50AFFF;       /* 未选中时边框为蓝色 */
+    background-color: #50AFFF;       /* 未选中时背景为蓝色 */
+    border-radius: 2px;              /* 轻微圆角 */
+}
+
+/* 选中状态 */
+QRadioButton::indicator:checked {
+    border: 2px solid #FFFFFF;       /* 选中时边框为白色 */
+    background-color: #50AFFF;       /* 选中时背景为蓝色 */
+}
+
+/* 悬停状态（未选中时） */
+QRadioButton::indicator:hover {
+    border: 2px solid #FFFFFF;       /* 选中时边框为白色 */
+    background-color: #50AFFF;       /* 选中时背景为蓝色 */
+}
+
+/* 禁用状态 */
+QRadioButton:disabled {
+    color: #606060;
+}
+
+QRadioButton:disabled::indicator {
+    border-color: #444;              /* 禁用时边框为深灰 */
+    background-color: #202020;       /* 禁用时背景为深灰 */
+}
+
+QRadioButton:disabled::indicator:checked {
+    border-color: #606060;           /* 禁用选中时边框为中灰 */
+    background-color: #303030;
+}
+
+/* 文字悬停状态 */
+QRadioButton:hover {
+    color: #B0B0B0;
+}
+
+QRadioButton:checked {
+    color: #FFFFFF;                  /* 选中时文字为白色 */
+}</string>
+             </property>
+             <property name="text">
+              <string>录屏</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QRadioButton" name="liveRatioButton">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QRadioButton {
+    border: 1px solid;
+    font: bold 9px &quot;Microsoft YaHei UI&quot;;
+	border-radius:3px;
+    color: #A0A0A0;
+    background-color: transparent;
+    padding: 4px;
+    margin: 2px;
+}
+
+/* 复选框指示器（未选中状态） */
+QRadioButton::indicator {
+    width: 12px;
+    height: 12px;
+    border: 2px solid #50AFFF;       /* 未选中时边框为蓝色 */
+    background-color: #50AFFF;       /* 未选中时背景为蓝色 */
+    border-radius: 2px;              /* 轻微圆角 */
+}
+
+/* 选中状态 */
+QRadioButton::indicator:checked {
+    border: 2px solid #FFFFFF;       /* 选中时边框为白色 */
+    background-color: #50AFFF;       /* 选中时背景为蓝色 */
+}
+
+/* 悬停状态（未选中时） */
+QRadioButton::indicator:hover {
+    border: 2px solid #FFFFFF;       /* 选中时边框为白色 */
+    background-color: #50AFFF;       /* 选中时背景为蓝色 */
+}
+
+/* 禁用状态 */
+QRadioButton:disabled {
+    color: #606060;
+}
+
+QRadioButton:disabled::indicator {
+    border-color: #444;              /* 禁用时边框为深灰 */
+    background-color: #202020;       /* 禁用时背景为深灰 */
+}
+
+QRadioButton:disabled::indicator:checked {
+    border-color: #606060;           /* 禁用选中时边框为中灰 */
+    background-color: #303030;
+}
+
+/* 文字悬停状态 */
+QRadioButton:hover {
+    color: #B0B0B0;
+}
+
+QRadioButton:checked {
+    color: #FFFFFF;                  /* 选中时文字为白色 */
+}</string>
+             </property>
+             <property name="text">
+              <string>直播</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_8">
+           <item>
+            <widget class="QLabel" name="captureLab">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;录制路径:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="captureLineEdit">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>10</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QLineEdit {
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 5px 8px;
+    font: bold 9px &quot;Microsoft YaHei&quot;; /* 加粗字体 */
+    color: white;
+}
+
+/* 获得焦点时的样式 */
+QLineEdit:focus {
+    border-color: #4a86e8;
+}
+
+/* 禁用状态 */
+QLineEdit:disabled {
+    background: #f5f5f5;
+    color: #888;
+}</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_9">
+           <item>
+            <widget class="QLabel" name="labLive">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;直播路径：&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="liveLineEdit">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>10</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QLineEdit {
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 5px 8px;
+    font: bold 9px &quot;Microsoft YaHei&quot;; /* 加粗字体 */
+    color: white;
+}
+
+/* 获得焦点时的样式 */
+QLineEdit:focus {
+    border-color: #4a86e8;
+}
+
+/* 禁用状态 */
+QLineEdit:disabled {
+    background: #f5f5f5;
+    color: #888;
+}</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QWidget" name="SourceWidget" native="true">
+        <property name="maximumSize">
+         <size>
+          <width>200</width>
+          <height>200</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QWidget{
+	background-color:#272A33;
+	border:0px;
+	border-radius:5px;
+	
+}</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_8">
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_20">
+           <item>
+            <widget class="QLabel" name="sourceLab">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;输入源&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_21">
+           <item>
+            <widget class="QCheckBox" name="screenCheckBox">
+             <property name="styleSheet">
+              <string notr="true">/* QCheckBox 基础样式 */
+QCheckBox {
+    border: 1px solid;
+    font: bold 9px &quot;Microsoft YaHei UI&quot;;
+	border-radius:3px;
+    color: #A0A0A0;
+    background-color: transparent;
+    padding: 4px;
+    margin: 2px;
+}
+
+/* 复选框指示器（未选中状态） */
+QCheckBox::indicator {
+    width: 9px;
+    height: 9px;
+    border: 2px solid #50AFFF;       /* 未选中时边框为蓝色 */
+    background-color: #50AFFF;       /* 未选中时背景为蓝色 */
+    border-radius: 2px;              /* 轻微圆角 */
+}
+
+/* 选中状态 */
+QCheckBox::indicator:checked {
+    border: 2px solid #FFFFFF;       /* 选中时边框为白色 */
+    background-color: #50AFFF;       /* 选中时背景为蓝色 */
+}
+
+/* 悬停状态（未选中时） */
+QCheckBox::indicator:hover {
+    border: 2px solid #FFFFFF;       /* 选中时边框为白色 */
+    background-color: #50AFFF;       /* 选中时背景为蓝色 */
+}
+
+
+
+/* 禁用状态 */
+QCheckBox:disabled {
+    color: #606060;
+}
+
+QCheckBox:disabled::indicator {
+    border-color: #444;              /* 禁用时边框为深灰 */
+    background-color: #202020;       /* 禁用时背景为深灰 */
+}
+
+QCheckBox:disabled::indicator:checked {
+    border-color: #606060;           /* 禁用选中时边框为中灰 */
+    background-color: #303030;
+}
+
+/* 文字悬停状态 */
+QCheckBox:hover {
+    color: #B0B0B0;
+}
+
+QCheckBox:checked {
+    color: #FFFFFF;                  /* 选中时文字为白色 */
+}</string>
+             </property>
+             <property name="text">
+              <string>显示器采集</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="videoCheckBox">
+             <property name="styleSheet">
+              <string notr="true">/* QCheckBox 基础样式 */
+QCheckBox {
+    border: 1px solid;
+    font: bold 9px &quot;Microsoft YaHei UI&quot;;
+	border-radius:3px;
+    color: #A0A0A0;
+    background-color: transparent;
+    padding: 4px;
+    margin: 2px;
+}
+
+/* 复选框指示器（未选中状态） */
+QCheckBox::indicator {
+    width: 9px;
+    height: 9px;
+    border: 2px solid #50AFFF;       /* 未选中时边框为蓝色 */
+    background-color: #50AFFF;       /* 未选中时背景为蓝色 */
+    border-radius: 2px;              /* 轻微圆角 */
+}
+
+/* 选中状态 */
+QCheckBox::indicator:checked {
+    border: 2px solid #FFFFFF;       /* 选中时边框为白色 */
+    background-color: #50AFFF;       /* 选中时背景为蓝色 */
+}
+
+/* 悬停状态（未选中时） */
+QCheckBox::indicator:hover {
+    border: 2px solid #FFFFFF;       /* 选中时边框为白色 */
+    background-color: #50AFFF;       /* 选中时背景为蓝色 */
+}
+
+
+
+/* 禁用状态 */
+QCheckBox:disabled {
+    color: #606060;
+}
+
+QCheckBox:disabled::indicator {
+    border-color: #444;              /* 禁用时边框为深灰 */
+    background-color: #202020;       /* 禁用时背景为深灰 */
+}
+
+QCheckBox:disabled::indicator:checked {
+    border-color: #606060;           /* 禁用选中时边框为中灰 */
+    background-color: #303030;
+}
+
+/* 文字悬停状态 */
+QCheckBox:hover {
+    color: #B0B0B0;
+}
+
+QCheckBox:checked {
+    color: #FFFFFF;                  /* 选中时文字为白色 */
+}</string>
+             </property>
+             <property name="text">
+              <string>视频文件</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_22">
+           <item>
+            <widget class="QCheckBox" name="cameraCheckBox">
+             <property name="styleSheet">
+              <string notr="true">/* QCheckBox 基础样式 */
+QCheckBox {
+    border: 1px solid;
+    font: bold 9px &quot;Microsoft YaHei UI&quot;;
+	border-radius:3px;
+    color: #A0A0A0;
+    background-color: transparent;
+    padding: 4px;
+    margin: 2px;
+}
+
+/* 复选框指示器（未选中状态） */
+QCheckBox::indicator {
+    width: 9px;
+    height: 9px;
+    border: 2px solid #50AFFF;       /* 未选中时边框为蓝色 */
+    background-color: #50AFFF;       /* 未选中时背景为蓝色 */
+    border-radius: 2px;              /* 轻微圆角 */
+}
+
+/* 选中状态 */
+QCheckBox::indicator:checked {
+    border: 2px solid #FFFFFF;       /* 选中时边框为白色 */
+    background-color: #50AFFF;       /* 选中时背景为蓝色 */
+}
+
+/* 悬停状态（未选中时） */
+QCheckBox::indicator:hover {
+    border: 2px solid #FFFFFF;       /* 选中时边框为白色 */
+    background-color: #50AFFF;       /* 选中时背景为蓝色 */
+}
+
+
+
+/* 禁用状态 */
+QCheckBox:disabled {
+    color: #606060;
+}
+
+QCheckBox:disabled::indicator {
+    border-color: #444;              /* 禁用时边框为深灰 */
+    background-color: #202020;       /* 禁用时背景为深灰 */
+}
+
+QCheckBox:disabled::indicator:checked {
+    border-color: #606060;           /* 禁用选中时边框为中灰 */
+    background-color: #303030;
+}
+
+/* 文字悬停状态 */
+QCheckBox:hover {
+    color: #B0B0B0;
+}
+
+QCheckBox:checked {
+    color: #FFFFFF;                  /* 选中时文字为白色 */
+}</string>
+             </property>
+             <property name="text">
+              <string>摄像头</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="cameraComboBox">
+             <property name="styleSheet">
+              <string notr="true">/* 基础样式 */
+QComboBox {
+    border: 1px solid #666;
+    border-radius: 4px;
+    padding: 0px 0px;
+    padding-right: 25px;
+    font: bold 15px &quot;Microsoft YaHei UI&quot;;
+    color: #fff;
+    background-color: #707070;
+    selection-background-color: #409EFF;
+    selection-color: white;
+}
+
+/* 下拉按钮 */
+QComboBox::drop-down {
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 20px;
+    border-left-width: 1px;
+    border-left-color: #666;
+    border-left-style: solid;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    background-color: #686868;
+}
+
+/* 下拉箭头 */
+QComboBox::down-arrow {
+    image: url(&quot;:/image/comboArrow&quot;);
+    width: 10px;
+    height: 6px;
+}
+
+/* 下拉列表视图 */
+QComboBox QAbstractItemView {
+    border: 1px solid #666;
+    border-radius: 4px;
+    background-color: #707070;
+    selection-background-color: #409EFF;
+    selection-color: white;
+    padding: 4px;
+    outline: none;
+}
+
+/* 悬停状态 */
+QComboBox:hover {
+    color: #fff;
+    border-color: #999;
+}
+
+QComboBox:hover::drop-down {
+    background-color: #606060;
+}
+
+/* 下拉状态 */
+QComboBox:on {
+    border-color: #409EFF;
+    color: #fff;
+}
+
+QComboBox:on::drop-down {
+    border-left-color: #409EFF;
+    background-color: #606060;
+}
+
+
+/* 禁用状态 */
+QComboBox:disabled {
+    color: #ccc;
+    background-color: #888;
+    border-color: #777;
+}
+
+QComboBox:disabled::drop-down {
+    border-left-color: #777;
+    background-color: #808080;
+}
+
+/* 滚动条样式 */
+QComboBox QScrollBar:vertical {
+    border: none;
+    background: #606060;
+    width: 8px;
+    margin: 0;
+}
+
+QComboBox QScrollBar::handle:vertical {
+    background: #999;
+    min-height: 20px;
+    border-radius: 4px;
+}
+  </string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_23">
+           <item>
+            <widget class="QCheckBox" name="microphoneCheckBox">
+             <property name="styleSheet">
+              <string notr="true">/* QCheckBox 基础样式 */
+QCheckBox {
+    border: 1px solid;
+    font: bold 9px &quot;Microsoft YaHei UI&quot;;
+	border-radius:3px;
+    color: #A0A0A0;
+    background-color: transparent;
+    padding: 4px;
+    margin: 2px;
+}
+
+/* 复选框指示器（未选中状态） */
+QCheckBox::indicator {
+    width: 9px;
+    height: 9px;
+    border: 2px solid #50AFFF;       /* 未选中时边框为蓝色 */
+    background-color: #50AFFF;       /* 未选中时背景为蓝色 */
+    border-radius: 2px;              /* 轻微圆角 */
+}
+
+/* 选中状态 */
+QCheckBox::indicator:checked {
+    border: 2px solid #FFFFFF;       /* 选中时边框为白色 */
+    background-color: #50AFFF;       /* 选中时背景为蓝色 */
+}
+
+/* 悬停状态（未选中时） */
+QCheckBox::indicator:hover {
+    border: 2px solid #FFFFFF;       /* 选中时边框为白色 */
+    background-color: #50AFFF;       /* 选中时背景为蓝色 */
+}
+
+
+
+/* 禁用状态 */
+QCheckBox:disabled {
+    color: #606060;
+}
+
+QCheckBox:disabled::indicator {
+    border-color: #444;              /* 禁用时边框为深灰 */
+    background-color: #202020;       /* 禁用时背景为深灰 */
+}
+
+QCheckBox:disabled::indicator:checked {
+    border-color: #606060;           /* 禁用选中时边框为中灰 */
+    background-color: #303030;
+}
+
+/* 文字悬停状态 */
+QCheckBox:hover {
+    color: #B0B0B0;
+}
+
+QCheckBox:checked {
+    color: #FFFFFF;                  /* 选中时文字为白色 */
+}</string>
+             </property>
+             <property name="text">
+              <string>麦克风</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="desktopCheckBox">
+             <property name="styleSheet">
+              <string notr="true">/* QCheckBox 基础样式 */
+QCheckBox {
+    border: 1px solid;
+    font: bold 9px &quot;Microsoft YaHei UI&quot;;
+	border-radius:3px;
+    color: #A0A0A0;
+    background-color: transparent;
+    padding: 4px;
+    margin: 2px;
+}
+
+/* 复选框指示器（未选中状态） */
+QCheckBox::indicator {
+    width: 9px;
+    height: 9px;
+    border: 2px solid #50AFFF;       /* 未选中时边框为蓝色 */
+    background-color: #50AFFF;       /* 未选中时背景为蓝色 */
+    border-radius: 2px;              /* 轻微圆角 */
+}
+
+/* 选中状态 */
+QCheckBox::indicator:checked {
+    border: 2px solid #FFFFFF;       /* 选中时边框为白色 */
+    background-color: #50AFFF;       /* 选中时背景为蓝色 */
+}
+
+/* 悬停状态（未选中时） */
+QCheckBox::indicator:hover {
+    border: 2px solid #FFFFFF;       /* 选中时边框为白色 */
+    background-color: #50AFFF;       /* 选中时背景为蓝色 */
+}
+
+
+
+/* 禁用状态 */
+QCheckBox:disabled {
+    color: #606060;
+}
+
+QCheckBox:disabled::indicator {
+    border-color: #444;              /* 禁用时边框为深灰 */
+    background-color: #202020;       /* 禁用时背景为深灰 */
+}
+
+QCheckBox:disabled::indicator:checked {
+    border-color: #606060;           /* 禁用选中时边框为中灰 */
+    background-color: #303030;
+}
+
+/* 文字悬停状态 */
+QCheckBox:hover {
+    color: #B0B0B0;
+}
+
+QCheckBox:checked {
+    color: #FFFFFF;                  /* 选中时文字为白色 */
+}</string>
+             </property>
+             <property name="text">
+              <string>桌面音频</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QWidget" name="RecordWidget" native="true">
+        <property name="maximumSize">
+         <size>
+          <width>200</width>
+          <height>200</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QWidget{
+	background-color:#272A33;
+	border:0px;
+	border-radius:5px;
+	
+}</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_9">
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_24">
+           <item>
+            <widget class="QLabel" name="recordLab">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;录制设置&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_25">
+           <item>
+            <widget class="QLabel" name="microphoneLab">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;麦克风&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QSlider" name="microphoneSlider">
+             <property name="orientation">
+              <enum>Qt::Orientation::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="audiovolumeLab">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;桌面音频&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QSlider" name="audiovolumeSlider">
+             <property name="orientation">
+              <enum>Qt::Orientation::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_26">
+           <item>
+            <widget class="QCheckBox" name="beautyCheckBox">
+             <property name="styleSheet">
+              <string notr="true">/* QCheckBox 基础样式 */
+QCheckBox {
+    border: 1px solid;
+    font: bold 9px &quot;Microsoft YaHei UI&quot;;
+	border-radius:3px;
+    color: #A0A0A0;
+    background-color: transparent;
+    padding: 4px;
+    margin: 2px;
+}
+
+/* 复选框指示器（未选中状态） */
+QCheckBox::indicator {
+    width: 9px;
+    height: 9px;
+    border: 2px solid #50AFFF;       /* 未选中时边框为蓝色 */
+    background-color: #50AFFF;       /* 未选中时背景为蓝色 */
+    border-radius: 2px;              /* 轻微圆角 */
+}
+
+/* 选中状态 */
+QCheckBox::indicator:checked {
+    border: 2px solid #FFFFFF;       /* 选中时边框为白色 */
+    background-color: #50AFFF;       /* 选中时背景为蓝色 */
+}
+
+/* 悬停状态（未选中时） */
+QCheckBox::indicator:hover {
+    border: 2px solid #FFFFFF;       /* 选中时边框为白色 */
+    background-color: #50AFFF;       /* 选中时背景为蓝色 */
+}
+
+
+
+/* 禁用状态 */
+QCheckBox:disabled {
+    color: #606060;
+}
+
+QCheckBox:disabled::indicator {
+    border-color: #444;              /* 禁用时边框为深灰 */
+    background-color: #202020;       /* 禁用时背景为深灰 */
+}
+
+QCheckBox:disabled::indicator:checked {
+    border-color: #606060;           /* 禁用选中时边框为中灰 */
+    background-color: #303030;
+}
+
+/* 文字悬停状态 */
+QCheckBox:hover {
+    color: #B0B0B0;
+}
+
+QCheckBox:checked {
+    color: #FFFFFF;                  /* 选中时文字为白色 */
+}</string>
+             </property>
+             <property name="text">
+              <string>美颜</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="smoothLab">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;磨皮&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QSlider" name="smoothSlider">
+             <property name="orientation">
+              <enum>Qt::Orientation::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="whiteLab">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;美白&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QSlider" name="whiteSlider">
+             <property name="orientation">
+              <enum>Qt::Orientation::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_27">
+           <item>
+            <widget class="QPushButton" name="StartBtn">
+             <property name="text">
+              <string>开始</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="StopBtn">
+             <property name="text">
+              <string>停止</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="captureProcessLabel">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;累计时长&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="captureProcessTimeLabel">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;00:00:00&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

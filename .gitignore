@@ -25,6 +25,7 @@
 # 构建目录
 build/
 Debug/
+ffmpeg/
 
 #QT
 *.user

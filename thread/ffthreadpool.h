@@ -5,6 +5,8 @@
 #include <thread>
 #include <mutex>
 #include <condition_variable>
+#include <iostream>
+
 class FFThreadPool
 {
 public:
@@ -38,10 +40,13 @@ public:
         enqueueTask(task);
     }
 
+
 private:
     void work();
     std::function<void()> getTask();
     void enqueueTask(std::function<void()>task);
+
+
 private:
     std::vector<std::thread> threadVec;
     std::queue<std::function<void()>> taskQueue;
@@ -49,6 +54,7 @@ private:
     std::condition_variable cond;
     bool m_stop;
     size_t threadCount;
+
 };
 
 #endif // FFTHREADPOOL_H

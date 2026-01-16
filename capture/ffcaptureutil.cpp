@@ -1,3 +1,7 @@
 #include "ffcaptureutil.h"
+#include "ui/ffcapwindow.h"
 
-FFCaptureUtil::FFCaptureUtil() {}
+FFCaptureUtil::FFCaptureUtil(QObject *parent):QObject(parent)
+{
+
+}

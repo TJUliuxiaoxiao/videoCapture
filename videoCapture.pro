@@ -18,12 +18,24 @@ LIBS += -L$$PWD/ffmpeg/lib \
 SOURCES += \
     capture/ffcapturecontext.cpp \
     capture/ffcaptureutil.cpp \
+    clock/ffglobalclock.cpp \
+    decoder/ffadecoder.cpp \
+    decoder/ffvdecoder.cpp \
     demuxer/ffdemuxer.cpp \
+    event/ffevent.cpp \
+    filter/ffafilter.cpp \
+    filter/ffvfilter.cpp \
     main.cpp \
     opengl/ffglrenderwidget.cpp \
+    queue/ffaframequeue.cpp \
     queue/ffapacketqueue.cpp \
+    queue/ffeventqueue.cpp \
     queue/ffpacket.cpp \
+    queue/ffvframequeue.cpp \
     queue/ffvpacketqueue.cpp \
+    resampler/ffaresampler.cpp \
+    resampler/ffvresampler.cpp \
+    thread/ffadecoderthread.cpp \
     thread/ffthread.cpp \
     thread/ffthreadpool.cpp \
     ui/ffcapheaderwidget.cpp \
@@ -32,11 +44,23 @@ SOURCES += \
 HEADERS += \
     capture/ffcapturecontext.h \
     capture/ffcaptureutil.h \
+    clock/ffglobalclock.h \
+    decoder/ffadecoder.h \
+    decoder/ffvdecoder.h \
     demuxer/ffdemuxer.h \
+    event/ffevent.h \
+    filter/ffafilter.h \
+    filter/ffvfilter.h \
     opengl/ffglrenderwidget.h \
+    queue/ffaframequeue.h \
     queue/ffapacketqueue.h \
+    queue/ffeventqueue.h \
     queue/ffpacket.h \
+    queue/ffvframequeue.h \
     queue/ffvpacketqueue.h \
+    resampler/ffaresampler.h \
+    resampler/ffvresampler.h \
+    thread/ffadecoderthread.h \
     thread/ffthread.h \
     thread/ffthreadpool.h \
     ui/ffcapheaderwidget.h \

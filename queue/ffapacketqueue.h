@@ -31,11 +31,11 @@ public:
     void close();
     void start();
 private:
-    std::atomic<size_t> serial;
+    std::atomic<size_t> serial;//序列号
     std::condition_variable cond;
     std::mutex mutex;
     std::queue<FFPacket*> pktQueue;
-    std::atomic<bool> m_stop;
+    std::atomic<bool> m_stop;//用于当需要停止时，唤醒所有的相关线程，防止死锁
 };
 
 #endif // FFAPACKETQUEUE_H

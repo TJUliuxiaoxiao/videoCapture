@@ -5,6 +5,7 @@
 #include <atomic>
 #include <mutex>
 
+//解封装demuxer
 
 extern "C"{
 #include <libavformat/avformat.h>
@@ -12,9 +13,11 @@ extern "C"{
 #include<libavdevice/avdevice.h>
 #include<libavutil/time.h>
 }
+
 class FFVPacketQueue;
 class FFAPacketQueue;
 using std::string;
+
 class FFDemuxer
 {
 public:
@@ -36,12 +39,15 @@ private:
 private:
     string url;//媒体文件路径
     string format;//指定的格式，例如RTSP 文件等
+
     AVFormatContext* fmtCtx =  nullptr;//FFmpeg格式的上下文，核心结构
     AVDictionary* opts = nullptr;//打开媒体文件的选项
     AVStream* aStream = nullptr;//音频流
     AVStream* vStream = nullptr;//视频流
+
     FFAPacketQueue *aPktQueue = nullptr;
     FFVPacketQueue *vPktQueue = nullptr;
+
     AVRational aTimeBase;
     AVRational vTimeBase;
 
@@ -53,5 +59,4 @@ private:
     bool stopFlag = false;//控制解封装循环
 
 };
-
 #endif // FFDEMUXER_H

@@ -22,10 +22,13 @@ SOURCES += \
     decoder/ffadecoder.cpp \
     decoder/ffvdecoder.cpp \
     demuxer/ffdemuxer.cpp \
+    encoder/ffaencoder.cpp \
+    encoder/ffvencoder.cpp \
     event/ffevent.cpp \
     filter/ffafilter.cpp \
     filter/ffvfilter.cpp \
     main.cpp \
+    muxer/ffmuxer.cpp \
     opengl/ffglrenderwidget.cpp \
     queue/ffaframequeue.cpp \
     queue/ffapacketqueue.cpp \
@@ -48,9 +51,12 @@ HEADERS += \
     decoder/ffadecoder.h \
     decoder/ffvdecoder.h \
     demuxer/ffdemuxer.h \
+    encoder/ffaencoder.h \
+    encoder/ffvencoder.h \
     event/ffevent.h \
     filter/ffafilter.h \
     filter/ffvfilter.h \
+    muxer/ffmuxer.h \
     opengl/ffglrenderwidget.h \
     queue/ffaframequeue.h \
     queue/ffapacketqueue.h \

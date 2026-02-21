@@ -4,12 +4,10 @@ FFThreadPool::FFThreadPool():m_stop(false){
 
 }
 
-
 FFThreadPool::~FFThreadPool(){
     stop();
     wait();
 }
-
 
 void FFThreadPool::init(size_t threadCount_)
 {
@@ -19,12 +17,10 @@ void FFThreadPool::init(size_t threadCount_)
     }
 }
 
-
 void FFThreadPool::stop(){
     m_stop = true;
     cond.notify_all();
 }
-
 
 void FFThreadPool::wait()
 {
@@ -34,7 +30,6 @@ void FFThreadPool::wait()
         }
     }
 }
-
 
 void FFThreadPool::work()
 {
@@ -49,7 +44,6 @@ void FFThreadPool::work()
     }
 }
 
-
 std::function<void ()> FFThreadPool::getTask()
 {
     std::unique_lock<std::mutex>lock(mutex);
@@ -63,7 +57,6 @@ std::function<void ()> FFThreadPool::getTask()
     std::cout<<"getTask"<<std::endl;
     return task;
 }
-
 
 void FFThreadPool::enqueueTask(std::function<void ()> task)
 {

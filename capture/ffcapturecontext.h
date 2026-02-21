@@ -18,6 +18,8 @@ namespace FFCaptureContextType{
         0,1,-1
     };//映射不同的demuxer到数组索引
 };
+
+
 class FFCaptureContext
 {
 public:

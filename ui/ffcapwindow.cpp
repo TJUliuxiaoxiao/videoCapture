@@ -12,3 +12,8 @@ FFCapWindow::~FFCapWindow()
 {
     delete ui;
 }
+
+const std::vector<int> &FFCapWindow::getOverlayNumbers()
+{
+    return overlayNumbers;
+}

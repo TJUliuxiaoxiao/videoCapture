@@ -4,6 +4,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++17
 INCLUDEPATH += $$PWD/ffmpeg/include
+INCLUDEPATH += $$PWD/3rdparty/opencv/include
 LIBS += -L$$PWD/ffmpeg/lib \
         -lavcodec \
         -lavformat \
@@ -11,6 +12,7 @@ LIBS += -L$$PWD/ffmpeg/lib \
         -lavdevice \
         -lswscale \
         -lswresample
+LIBS += $$PWD\3rdparty\opencv\lib\libopencv_*.a
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
@@ -29,6 +31,9 @@ SOURCES += \
     filter/ffvfilter.cpp \
     main.cpp \
     muxer/ffmuxer.cpp \
+    opencv/fffacedetector.cpp \
+    opencv/ffoverlayprocessor.cpp \
+    opencv/ffvideoadapter.cpp \
     opengl/ffglrenderwidget.cpp \
     queue/ffaframequeue.cpp \
     queue/ffapacketqueue.cpp \
@@ -39,10 +44,15 @@ SOURCES += \
     resampler/ffaresampler.cpp \
     resampler/ffvresampler.cpp \
     thread/ffadecoderthread.cpp \
+    thread/ffafilterthread.cpp \
+    thread/ffdemuxerthread.cpp \
     thread/ffthread.cpp \
     thread/ffthreadpool.cpp \
+    thread/ffvdecoderthread.cpp \
+    thread/ffvfilterthread.cpp \
     ui/ffcapheaderwidget.cpp \
-    ui/ffcapwindow.cpp
+    ui/ffcapwindow.cpp \
+    ui/ffrenderwidget.cpp
 
 HEADERS += \
     capture/ffcapturecontext.h \
@@ -57,7 +67,11 @@ HEADERS += \
     filter/ffafilter.h \
     filter/ffvfilter.h \
     muxer/ffmuxer.h \
+    opencv/fffacedetector.h \
+    opencv/ffoverlayprocessor.h \
+    opencv/ffvideoadapter.h \
     opengl/ffglrenderwidget.h \
+    player/ffplayercontext.h \
     queue/ffaframequeue.h \
     queue/ffapacketqueue.h \
     queue/ffeventqueue.h \
@@ -67,10 +81,15 @@ HEADERS += \
     resampler/ffaresampler.h \
     resampler/ffvresampler.h \
     thread/ffadecoderthread.h \
+    thread/ffafilterthread.h \
+    thread/ffdemuxerthread.h \
     thread/ffthread.h \
     thread/ffthreadpool.h \
+    thread/ffvdecoderthread.h \
+    thread/ffvfilterthread.h \
     ui/ffcapheaderwidget.h \
-    ui/ffcapwindow.h
+    ui/ffcapwindow.h \
+    ui/ffrenderwidget.h
 
 FORMS += \
     ui/ffcapwindow.ui

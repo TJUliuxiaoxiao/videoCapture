@@ -6,7 +6,7 @@ extern "C"{
 }
 class FFAPacketQueue;
 class FFADecoder;
-class FFPlayContext;
+class FFPlayerContext;
 
 class FFADecoderThread:public FFThread
 {
@@ -23,6 +23,9 @@ protected:
 private:
     FFAPacketQueue* aPktQueue = nullptr;
     FFADecoder* aDecoder = nullptr;
+    FFPlayerContext* playerCtx = nullptr;
+
+    std::atomic<bool> stopFlag;
 
 };
 

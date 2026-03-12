@@ -3,7 +3,7 @@
 #include "opencv/fffacedetector.h"
 #include "qobjectdefs.h"
 #include "queue/ffvframequeue.h"
-
+#include "filter/ffvfilter.h"
 using namespace FFCaptureContextType;
 FFVFilterThread::FFVFilterThread() {
     //设置叠加图层在背景上的默认位置和大小
@@ -12,13 +12,11 @@ FFVFilterThread::FFVFilterThread() {
     overlayPts = 0;
     overlayDts = 0;
     encoderFlag.store(false);
-
     //for test
     cameraFlag.store(false);
     videoFlag.store(false);
     screenFlag.store(false);
     pauseFlag.store(false);
-
     pauseTime = 0;//暂停时长
     lastPauseTime = 0;//上一次暂停的时间戳
 }
@@ -155,7 +153,7 @@ void FFVFilterThread::pauseEncoder()
     }
     else{
         pauseFlag.store(true);
-        lastPauseTime = av_gettime_relative() - lastPauseTime;
+        lastPauseTime = av_gettime_relative();
     }
 }
 
@@ -213,7 +211,6 @@ void FFVFilterThread::run()
                     eofFlag = true;
                     continue;
                 }//取出的帧为空或者数据无效,则设置eofFlag = true,停止数据处理
-
 
                 // 跨线程UI更新,通过QMetaObject::invokeMethod将帧发送到
                 // 主窗口capWindow的sendVideoFrame槽,确保UI操作在主线程执行
@@ -311,10 +308,13 @@ void FFVFilterThread::run()
             //图像（所有图层合成后的结果）的 AVFrame
             AVFrame* encodeFrame = overlayProcessor->getOverlayFrame();
             auto end = av_gettime_relative();
-            int64_t duration = (end - start) * 10;
-            overlayPts = av_gettime_relative()*10+duration-pauseTime * 10;
-            encodeFrame->pkt_dts = overlayDts;
-            encodeFrame->pts = overlayPts;
+            // int64_t duration = (end - start) * 10;
+            int64_t duration = (end - start);
+            overlayPts = av_gettime_relative()+duration-pauseTime;
+            encodeFrame->pkt_dts = av_rescale_q(overlayDts, (AVRational){1, 1000000}, (AVRational){1, 30});
+            encodeFrame->pts = av_rescale_q(overlayPts, (AVRational){1, 1000000}, (AVRational){1, 30});
+            filter->sendEncodeFrame(encodeFrame);
+            overlayProcessor->resetBackground();
         }
     }
 }
@@ -327,8 +327,3 @@ void FFVFilterThread::overlayFrame(AVFrame *frame, int type)
         av_frame_free(&frame);
     }
 }
-
-
-
-
-

@@ -136,8 +136,10 @@ void FFVEncoder::initVideo(AVFrame *frame, AVRational fps)
     codecCtx->height = vPars->height;
     codecCtx->framerate = vPars->frameRate;
     // 时间基：时间戳的单位，这里是帧率的倒数
-    // 例如帧率25fps时，时间基为1/25秒
+    // 例如帧率30fps时，时间基为1/30秒
     codecCtx->time_base = AVRational{vPars->frameRate.den,vPars->frameRate.num};
+    std::cout<<"frame rate"<<vPars->frameRate.num<<"/"<<vPars->frameRate.den<<std::endl;
+    std::cout<<"time_base"<<codecCtx->time_base.num<<"/"<<codecCtx->time_base.den<<std::endl;
     codecCtx->pix_fmt = vPars->videoFmt;
 
     // 设置全局头标志，某些封装格式（如MP4）需要

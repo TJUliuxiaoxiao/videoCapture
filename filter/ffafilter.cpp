@@ -147,9 +147,11 @@ int FFAFilter::sendFilter(AVFrame* frame1,AVFrame* frame2,int64_t start,int64_t 
         encoderFrmQueue->enqueue(filterFrame);//将处理后的帧放入编码队列
         //调整时间戳
         auto end = av_gettime_relative();
-        int64_t duration = 10*(end - start);
-        filterFrame->pts = av_gettime_relative()*10 +
-                           duration - pauseTime*10;
+        int64_t duration = (end - start);
+        // filterFrame->pts = av_gettime_relative()*10 +
+        //                    duration - pauseTime*10;
+        int64_t elapsed_us = av_gettime_relative()+duration - pauseTime;  // 假设 start 是录制开始时间（微秒）
+        filterFrame->pts = av_rescale_q(elapsed_us, (AVRational){1, 1000000}, FF_AUDIO_TIME_BASE);
         // av_frame_unref(filterFrame);
         // av_frame_free(&filterFrame);
     }
@@ -167,9 +169,13 @@ void FFAFilter::sendFrame(AVFrame *frame,int64_t start,int64_t pauseTime)
     if(frame == nullptr){
         return;
     }
-    auto end = av_gettime_relative()*10;
+    // auto end = av_gettime_relative()*10;
+    // auto duration = (end - start);
+    // frame->pts = av_gettime_relative()*10-duration-pauseTime*10;
+    auto end = av_gettime_relative();
     auto duration = (end - start);
-    frame->pts = av_gettime_relative()*10-duration-pauseTime*10;
+    int64_t elaped_us = av_gettime_relative()-duration-pauseTime;
+    frame->pts = av_rescale_q(elaped_us,(AVRational){1, 1000000}, FF_AUDIO_TIME_BASE);
     encoderFrmQueue->enqueue(frame);
     av_frame_free(&frame);
 }

@@ -2,6 +2,7 @@
 #define FFVDECODERTHREAD_H
 
 #include "ffthread.h"
+#include <mutex>
 extern "C"
 {
 #include <libavformat/avformat.h>
@@ -43,6 +44,7 @@ private:
     FFVDecoder* vDecoder = nullptr;
     FFPlayerContext* playerCtx = nullptr;
     std::atomic<bool> stopFlag;
+    std::mutex mutex;
 };
 
 #endif // FFVDECODERTHREAD_H

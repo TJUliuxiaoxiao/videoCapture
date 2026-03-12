@@ -66,8 +66,6 @@ private:
     AVFrame* lastVideoFrame = nullptr;//上一帧视频
     AVFrame* videoFrame = nullptr;//视频文件当前帧
     // AVFrame* videoFrame2 = nullptr;//视频文件另一帧
-
-
     size_t cameraCount = 0;//摄像头计数
     std::mutex mutex;//互斥锁
     bool eofFlag = false;//是否到达文件末尾

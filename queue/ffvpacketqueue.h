@@ -32,6 +32,7 @@ public:
     void close();
     void start();
     void setMaxSize(size_t maxSize_);
+    size_t size();
 
 private:
     std::mutex mutex;

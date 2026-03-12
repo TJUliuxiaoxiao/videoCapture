@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>645</width>
-    <height>558</height>
+    <width>679</width>
+    <height>680</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -29,7 +29,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QWidget" name="headerWidget" native="true">
+    <widget class="FFCapHeaderWidget" name="headerWidget" native="true">
      <property name="maximumSize">
       <size>
        <width>16777215</width>
@@ -124,7 +124,7 @@
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>300</height>
+       <height>500</height>
       </size>
      </property>
      <property name="maximumSize">
@@ -168,7 +168,7 @@
        </spacer>
       </item>
       <item>
-       <layout class="QVBoxLayout" name="verticalLayout_2" stretch="10,1">
+       <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0">
         <property name="spacing">
          <number>5</number>
         </property>
@@ -185,27 +185,7 @@
          <number>5</number>
         </property>
         <item>
-         <widget class="QOpenGLWidget" name="GLRendderWidget">
-          <property name="minimumSize">
-           <size>
-            <width>400</width>
-            <height>200</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <spacer name="verticalSpacer">
-          <property name="orientation">
-           <enum>Qt::Orientation::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>10</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
+         <widget class="FFGLRenderWidget" name="GLRenderWidget"/>
         </item>
        </layout>
       </item>
@@ -243,14 +223,8 @@
        <widget class="QWidget" name="ModeWidget" native="true">
         <property name="minimumSize">
          <size>
-          <width>0</width>
+          <width>300</width>
           <height>0</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>200</width>
-          <height>200</height>
          </size>
         </property>
         <property name="styleSheet">
@@ -272,6 +246,18 @@
           <layout class="QHBoxLayout" name="horizontalLayout_6">
            <item>
             <widget class="QLabel" name="modeLab">
+             <property name="minimumSize">
+              <size>
+               <width>300</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>20</height>
+              </size>
+             </property>
              <property name="text">
               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;模式选择&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
@@ -458,6 +444,9 @@ QLineEdit:disabled {
     color: #888;
 }</string>
              </property>
+             <property name="text">
+              <string>D:/codes/QT/videoCapture/videoCapture/VideoOutput/out.mp4</string>
+             </property>
             </widget>
            </item>
           </layout>
@@ -511,7 +500,7 @@ QLineEdit:disabled {
         <property name="maximumSize">
          <size>
           <width>200</width>
-          <height>200</height>
+          <height>16777215</height>
          </size>
         </property>
         <property name="styleSheet">
@@ -527,6 +516,12 @@ QLineEdit:disabled {
           <layout class="QHBoxLayout" name="horizontalLayout_20">
            <item>
             <widget class="QLabel" name="sourceLab">
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>20</height>
+              </size>
+             </property>
              <property name="text">
               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;输入源&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
@@ -834,6 +829,16 @@ QComboBox QScrollBar::handle:vertical {
 }
   </string>
              </property>
+             <item>
+              <property name="text">
+               <string>无摄像头</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>USB2.0 HD UVC WebCam</string>
+              </property>
+             </item>
             </widget>
            </item>
           </layout>
@@ -907,7 +912,7 @@ QCheckBox:checked {
             </widget>
            </item>
            <item>
-            <widget class="QCheckBox" name="desktopCheckBox">
+            <widget class="QCheckBox" name="desktopAudioCheckBox">
              <property name="styleSheet">
               <string notr="true">/* QCheckBox 基础样式 */
 QCheckBox {
@@ -979,12 +984,6 @@ QCheckBox:checked {
       </item>
       <item>
        <widget class="QWidget" name="RecordWidget" native="true">
-        <property name="maximumSize">
-         <size>
-          <width>200</width>
-          <height>200</height>
-         </size>
-        </property>
         <property name="styleSheet">
          <string notr="true">QWidget{
 	background-color:#272A33;
@@ -998,6 +997,12 @@ QCheckBox:checked {
           <layout class="QHBoxLayout" name="horizontalLayout_24">
            <item>
             <widget class="QLabel" name="recordLab">
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>20</height>
+              </size>
+             </property>
              <property name="text">
               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;录制设置&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
@@ -1139,6 +1144,11 @@ QCheckBox:checked {
           <layout class="QHBoxLayout" name="horizontalLayout_27">
            <item>
             <widget class="QPushButton" name="StartBtn">
+             <property name="styleSheet">
+              <string notr="true">QPushButton#solidBorder {
+    border: 3px solid white;
+}</string>
+             </property>
              <property name="text">
               <string>开始</string>
              </property>
@@ -1175,6 +1185,19 @@ QCheckBox:checked {
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>FFCapHeaderWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">ffcapheaderwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>FFGLRenderWidget</class>
+   <extends>QOpenGLWidget</extends>
+   <header location="global">ffglrenderwidget.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

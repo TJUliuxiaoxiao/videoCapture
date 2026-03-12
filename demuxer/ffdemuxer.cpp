@@ -21,7 +21,6 @@ void FFDemuxer::init(const string &url_, const string &format_, FFAPacketQueue *
     type = type_;
     stopFlag = false;
     initDemuxer();
-
 }
 
 int FFDemuxer::demux()
@@ -30,12 +29,17 @@ int FFDemuxer::demux()
 #if LIBAVCODEC_VERSION_MAJOR>=58
     //新版本代码
     AVPacket* packet = av_packet_alloc();
-    av_init_packet(packet);
+    // av_init_packet(packet);
 #else
     //旧版本代码
     AVPacket* packet = av_packet_alloc();
     av_init_packet(packet);
 #endif
+    if (!packet) {
+        // 处理内存分配失败
+        std::cout<<"in demuxer packet allocate fail!"<<std::endl;
+        return -1;
+    }
     if(fmtCtx == nullptr)
     {
         return -1;
@@ -51,6 +55,7 @@ int FFDemuxer::demux()
                 av_packet_free(&packet);
             }
             if(vPktQueue){
+
                 vPktQueue->enqueueNull();
                 av_packet_unref(packet);
                 av_packet_free(&packet);
@@ -68,6 +73,11 @@ int FFDemuxer::demux()
     if(stopFlag){
         return 0;
     }
+    //检查是否是空
+    // std::cout << "ret=0, size=" << packet->size
+    //           << ", data=" << (void*)packet->data
+    //           << ", buf=" << packet->buf
+    //           << ", pts=" << packet->pts << std::endl;
     if(aStream&&packet->stream_index==aStream->index){
         if(aPktQueue){
             aPktQueue->enqueue(packet);
@@ -77,12 +87,19 @@ int FFDemuxer::demux()
             av_packet_unref(packet);
             av_packet_free(&packet);
         }
+        // std::cout<<"stream: audio"<<std::endl;
     }else if(vStream&&packet->stream_index==vStream->index){
         if(vPktQueue){
             if(type == VIDEO){
                 std::cout<<"pts:"<<packet->pts<<std::endl;
             }
+            if(packet==nullptr){
+                std::cout<<"demuxer packet is nullptr!"<<std::endl;
+            }
+            // std::cout<<"In demuxer"<<"vPktQueue id"<<vPktQueue<<std::endl;
+            // std::cout << "[demuxer] before enqueue, queue size=" << vPktQueue->size() << std::endl;
             vPktQueue->enqueue(packet);
+            // std::cout << "[demuxer] after enqueue, queue size=" << vPktQueue->size() << std::endl;
             av_packet_free(&packet);
         }
         else{
@@ -175,6 +192,18 @@ void FFDemuxer::initDemuxer()
         avformat_close_input(&fmtCtx);
         printError(ret);
         return;
+    }
+    for(size_t i = 0;i<fmtCtx->nb_streams;++i){
+        AVStream* stream = fmtCtx->streams[i];
+        AVCodecParameters* codecPar = stream->codecpar;
+        if(codecPar->codec_type == AVMEDIA_TYPE_AUDIO){
+            aStream = stream;
+            aTimeBase = stream->time_base;
+        }
+        else if(codecPar->codec_type == AVMEDIA_TYPE_VIDEO){
+            vStream = stream;
+            vTimeBase = stream->time_base;
+        }
     }
 }
 

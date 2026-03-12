@@ -64,7 +64,14 @@ void FFVDecoderThread::run()
 {
     while(!m_stop){
         stopFlag.store(false,std::memory_order_release);
-        FFPacket* pkt = vPktQueue->dequeue();
+        FFPacket* pkt = nullptr;
+        {
+        std::lock_guard<std::mutex> lock(mutex);
+        // std::cout<<"In ffvdecoderThread run"<<"vPktQueue id"<<vPktQueue<<std::endl;
+        // std::cout<<"[consumer] before dequeue,queue size before="<<vPktQueue->size()<<std::endl;
+        pkt = vPktQueue->dequeue();
+        // std::cout << "[consumer] dequeue, queue size before=" << vPktQueue->size() << std::endl;
+        }
         if(pkt == nullptr){
             continue;
         }
@@ -79,8 +86,16 @@ void FFVDecoderThread::run()
                 vDecoder->decode(nullptr);
                 std::cout<<"null vpacket"<<std::endl;
                 vDecoder->enqueueNull();
+            }else{ //正常读取
+                //  auto start = av_gettime_relative();
+                vDecoder->decode(&pkt->packet);
+                //  auto end = av_gettime_relative();
+                //  std::cerr << "decode cost :" << (end - start ) / 1000  << std::endl;
             }
+            av_packet_unref(&pkt->packet);
+            av_freep(&pkt);
         }
+        // std::cout << "[consumer] after processing, queue size=" << vPktQueue->size() << std::endl;
     }
 }
 

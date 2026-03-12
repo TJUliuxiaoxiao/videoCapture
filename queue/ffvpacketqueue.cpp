@@ -43,6 +43,7 @@ void FFVPacketQueue::enqueue(AVPacket *pkt)
     }
     FFPacket* ffpkt = static_cast<FFPacket*>(av_mallocz(sizeof(FFPacket)));
     av_init_packet(&ffpkt->packet);
+    // ffpkt->packet = av_packet_alloc();
     av_packet_move_ref(&ffpkt->packet,pkt);
     ffpkt->serial = serial;
     ffpkt->type = NORMAL;
@@ -74,7 +75,7 @@ void FFVPacketQueue::enqueueNull()
     cond.wait(lock,[this](){
         return pktQueue.size()<MAX_PACKET_SIZE||m_stop.load();
     });
-    if(m_stop.load()==true){
+    if(m_stop){
         // m_stop.store(false);
         return;
     }
@@ -88,7 +89,8 @@ void FFVPacketQueue::enqueueNull()
 
 void FFVPacketQueue::flushQueue()
 {//刷新队列
-
+    std::lock_guard<std::mutex> lock(mutex);
+    std::cout << "[flushQueue] before flush, size=" << pktQueue.size() << std::endl;
     while(true){
         FFPacket* pkt = peekQueue();
         if(pkt == nullptr || pkt->serial == this->serial){
@@ -101,6 +103,7 @@ void FFVPacketQueue::flushQueue()
             av_freep(&pkt);
         }
     }
+    std::cout << "[flushQueue] after flush, size=" << pktQueue.size() << std::endl;
     cond.notify_one();
 }
 
@@ -142,4 +145,8 @@ void FFVPacketQueue::start()
 void FFVPacketQueue::setMaxSize(size_t maxSize_)
 {
     maxSize = maxSize_;
+}
+size_t FFVPacketQueue::size() {
+    std::lock_guard<std::mutex> lock(mutex);
+    return pktQueue.size();
 }

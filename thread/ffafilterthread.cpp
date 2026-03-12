@@ -85,7 +85,6 @@ void FFAFilterThread::pauseEncoder()//一个编码器暂停/恢复的切换功�
     //因此，必须借助状态变量来记录暂停的起始时刻（lastpauseTime）
     //并累加每次暂停的时长（pauseTime）。这两个变量配合 pauseFlag 一起，
     //共同维护了暂停/恢复的历史信息。
-
     //计算总暂停时间pauseTime的作用:同步多路流
     //如果同时处理多个编码器（如音视频分别编码），各路的暂停时间需保持一致，避免不同步。记录暂停时长可用于对齐或补偿。
 }
@@ -140,7 +139,8 @@ void FFAFilterThread::run()
             cond.wait_for(lock,std::chrono::milliseconds(100));
             continue;
         }
-        int64_t start = av_gettime_relative()*10;
+        // int64_t start = av_gettime_relative()*10;
+        int64_t start = av_gettime_relative();
 
         //混音:[声卡] + [麦克风]
         if(audioActive&&microphoneActive){

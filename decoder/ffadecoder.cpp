@@ -75,7 +75,8 @@ FFAudioPars *FFADecoder::getAudioPars()
 
 int FFADecoder::getTotalsec()
 {
-    return static_cast<int>(0,5 + stream->duration*av_q2d(stream->time_base));
+    return static_cast<int>(0.5 + stream->duration*av_q2d(stream->time_base)*1e3);
+    // return static_cast<int>(0.5 + stream->duration*av_q2d(stream->time_base));
 }
 
 void FFADecoder::wakeAllThread()
@@ -187,9 +188,11 @@ void FFADecoder::decode(AVPacket *packet)
                 }
                 else{
                     //克隆后将加入的帧加入队列
-                    AVFrame* decodeFrame = av_frame_clone(swrFrame);
-                    if(frmQueue!=nullptr)
-                        frmQueue->enqueue(decodeFrame);
+                    // AVFrame* decodeFrame = av_frame_clone(swrFrame);
+                    // if(frmQueue!=nullptr)
+                    //     frmQueue->enqueue(decodeFrame);
+                    // std::cout<<"audio frame decode pts"<<swrFrame->pts<<std::endl;
+                    frmQueue->enqueue(swrFrame);
                     av_frame_unref(swrFrame);
                     av_frame_free(&swrFrame);
                 }

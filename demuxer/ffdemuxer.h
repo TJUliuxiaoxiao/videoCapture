@@ -47,7 +47,6 @@ private:
 
     FFAPacketQueue *aPktQueue = nullptr;
     FFVPacketQueue *vPktQueue = nullptr;
-
     AVRational aTimeBase;
     AVRational vTimeBase;
 

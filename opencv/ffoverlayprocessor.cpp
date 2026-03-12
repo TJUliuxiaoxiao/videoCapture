@@ -55,6 +55,11 @@ void FFOverlayProcessor::overlayImage(cv::Mat &foreground, int x, int y, int w, 
     //检查叠加区域是否有效
     if(x1>=x2||y1>=y2)return;
     //首先将前景图像调整到指定大小
+    if (foreground.empty() || w <= 0 || h <= 0) {
+        // std::cerr << "overlayImage: invalid parameters (w=" << w << ", h=" << h
+        //           << ", foreground empty=" << foreground.empty() << ")" << std::endl;
+        return;
+    }
     cv::Mat resized_foreground;
     cv::resize(foreground,resized_foreground,cv::Size(w,h));
 

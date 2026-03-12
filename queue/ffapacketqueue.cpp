@@ -18,7 +18,7 @@ FFPacket *FFAPacketQueue::dequeue()
     FFPacket* ffpkt = pktQueue.front();
     pktQueue.pop();
     cond.notify_one();
-    std::cout<<"dequeue apacket!"<<std::endl;
+    // std::cout<<"dequeue apacket!"<<std::endl;
     return ffpkt;
 }
 
@@ -40,7 +40,11 @@ void FFAPacketQueue::enqueue(AVPacket *pkt)
         return;
     }
     FFPacket* ffpkt = static_cast<FFPacket*> (av_mallocz(sizeof(FFPacket)));
+#if LIBAVCODEC_VERSION_INT < AV_VERSION_INT(58, 35, 100)
     av_init_packet(&ffpkt->packet);
+#else
+    ffpkt->packet = av_packet_alloc();
+#endif
     av_packet_move_ref(&ffpkt->packet,pkt);
     /*分配内存：av_mallocz()分配并清零FFPacket结构体
     初始化：av_init_packet()初始化AVPacket结构

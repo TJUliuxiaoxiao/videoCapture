@@ -45,11 +45,17 @@ void FFDemuxerThread::wakeAllThread()
     cond.notify_all();//唤醒等待在当前线程条件变量上的线程
 }
 
+void FFDemuxerThread::seek(int64_t seekSec)
+{
+
+}
+
 void FFDemuxerThread::close()
 {
     if(demuxer){
         demuxer->close();//关闭下游解复用器
-    }//将关闭请求传播给关联的 FFDemuxer 对象
+    }
+    //将关闭请求传播给关联的 FFDemuxer 对象
     //（通常负责实际的 FFmpeg 解复用上下文）。
     cond.notify_all();//唤醒等待在本线程条件变量上的线程
     stopFlag.store(true,std::memory_order_release);//原子设置停止标志

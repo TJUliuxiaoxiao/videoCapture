@@ -15,12 +15,16 @@ void FFVDecoder::init(AVStream *stream_,FFVFrameQueue* frmQueue_)
     frmQueue = frmQueue_;
     m_stop.store(false,std::memory_order_release);
 
-    //查找解码器codec
 
+    if(stream==nullptr){
+        std::cerr<<"No Video stream Input"<<std::endl;
+        return;
+    }
     const AVCodec* codec = nullptr;
     if(stream->codecpar==nullptr){
         return;
     }
+    //查找解码器codec
     //如果是H.264，使用特定的"h264"解码器（可能是软解）;
     if(stream->codecpar->codec_id == AV_CODEC_ID_H264){
         codec = avcodec_find_decoder_by_name("h264");
@@ -258,24 +262,34 @@ void FFVDecoder::decode(AVPacket *packet)
                 }
                 else{
                     //克隆转换后的帧加入队列
+                    // std::cout<<"video frame pts:"<<swsFrame->pts<<std::endl;
                     AVFrame* decoderFrame = av_frame_clone(swsFrame);
+                    // if(frmQueue!=nullptr){
+                    //     frmQueue->enqueue(decoderFrame);
+                    // }
+                    // std::cout<<"video frame pts:"<<decoderFrame->pts<<std::endl;
                     if(frmQueue!=nullptr){
                         frmQueue->enqueue(decoderFrame);
                     }
-                    // av_frame_unref(decoderFrame);
-                    // av_frame_free(&decoderFrame);
+                    av_frame_unref(decoderFrame);
+                    av_frame_free(&decoderFrame);
                     av_frame_unref(swsFrame);
                     av_frame_free(&swsFrame);//清理临时帧
                 }
             }
             else{//无需格式转换
                 //解码队列
-                if(frmQueue){
-                    AVFrame* decoderFrame = av_frame_clone(frame);
-                    frmQueue->enqueue(decoderFrame);
-                    av_frame_free(&decoderFrame);
+                if(m_stop.load(std::memory_order_acquire)){
+                    av_frame_unref(frame);
+                    break;
+                }else{
+                    if(frmQueue){
+                        AVFrame* decoderFrame = av_frame_clone(frame);
+                        frmQueue->enqueue(decoderFrame);
+                        av_frame_free(&decoderFrame);
+                    }
+                    av_frame_unref(frame);
                 }
-                av_frame_unref(frame);
             }
         }
     }

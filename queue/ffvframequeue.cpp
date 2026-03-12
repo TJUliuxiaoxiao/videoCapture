@@ -66,6 +66,7 @@ AVFrame* FFVFrameQueue::dequeue()
     AVFrame* frame = frmQueue.front();
     frmQueue.pop();
     cond.notify_one();
+    // std::cout<<"frameQueue Size:"<<frmQueue.size()<<std::endl;
     return frame;
 }
 
@@ -104,7 +105,14 @@ void FFVFrameQueue::flushQueue()
         av_frame_unref(frame);
         av_frame_free(&frame);
     }
+    std::cerr<<"flush vframe Queue!"<<std::endl;
     cond.notify_one();
+}
+
+void FFVFrameQueue::close()
+{
+    wakeAllThread();
+    clearQueue();
 }
 
 void FFVFrameQueue::start()

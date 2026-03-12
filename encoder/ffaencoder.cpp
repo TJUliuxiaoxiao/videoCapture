@@ -1,6 +1,7 @@
 #include "ffaencoder.h"
 #include "queue/ffaframequeue.h"
 #include "queue/ffapacketqueue.h"
+#include <QDebug>
 FFAEncoder::FFAEncoder() {
 
 }
@@ -126,6 +127,8 @@ int FFAEncoder::encode(AVFrame* frame,int streamIndex,int64_t pts,AVRational tim
     pts: 显示时间戳，表示该帧的显示时间。
     timeBase: 时间基，用于时间戳的计算。
     */
+    Q_UNUSED(pts);
+    Q_UNUSED(timeBase);
     std::lock_guard<std::mutex> lock(mutex);
     if(frame == nullptr || codecCtx == nullptr){
         std::cout<<"nullptr"<<std::endl;

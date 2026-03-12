@@ -1,9 +1,11 @@
-#include "/ui/ffcapwindow.h"
-#include "/capture/ffcaptureutil.h"
-#include <QApplication>
 
+#include "ui/ffcapwindow.h"
+#include "capture/ffcaptureutil.h"
+#include <QApplication>
+#include <QPushButton>
 int main(int argc, char *argv[])
 {
+
     QApplication a(argc, argv);
     QIcon icon(":/image/icon.svg");
     a.setWindowIcon(icon);

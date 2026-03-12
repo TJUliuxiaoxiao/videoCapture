@@ -34,12 +34,12 @@ void FFMuxer::addStream(AVCodecContext *codecCtx)
     stream->time_base = codecCtx->time_base;
     //根据codec_type区分音频和视频流
 
-    if(codecCtx->codec_type == AVMEDIA_TYPE_AUDIO){//视频流
+    if(codecCtx->codec_type == AVMEDIA_TYPE_AUDIO){//音频流
         aCodecCtx = codecCtx;
         aStream = stream;
         aStreamIndex = stream->index;
         hasAudio = true;
-    }else if(codecCtx->codec_type==AVMEDIA_TYPE_VIDEO){//音频流
+    }else if(codecCtx->codec_type==AVMEDIA_TYPE_VIDEO){//视频流
         vCodecCtx = codecCtx;
         vStream = stream;
         vStreamIndex = stream->index;

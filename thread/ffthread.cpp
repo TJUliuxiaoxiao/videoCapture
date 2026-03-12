@@ -15,7 +15,8 @@ FFThread::~FFThread()
 
 void FFThread::stop()
 {
-    m_stop.store(true,std::memory_order_relaxed);//只是更改了m_stop变量,线程可能还在运行
+    // m_stop.store(true,std::memory_order_relaxed);//只是更改了m_stop变量,线程可能还在运行
+    m_stop = true;
 }
 
 
@@ -32,11 +33,15 @@ void FFThread::wait()
 
 void FFThread::start()
 {
-    if(m_thread.joinable()){
-        //选择抛出异常
-        throw std::runtime_error("该线程可连接了");
-    }
-    m_stop.store(false,std::memory_order_relaxed);
+    // if(m_thread.joinable()){
+    //     //选择抛出异常
+    //     throw std::runtime_error("该线程可连接了");
+    // }
+    // m_stop.store(false,std::memory_order_relaxed);
     //确保启动新线程之前,m_thread是不可连接的，即没有其他线程正在运行,否则会挤占资源
-    m_thread = std::thread(&FFThread::run,this);//此时在启动线程后m_thread.joinable()设置为true
+    m_stop = false;
+    if(!m_stop){
+        m_thread = std::thread(&FFThread::run,this);
+    }
+  //此时在启动线程后m_thread.joinable()设置为true
 }

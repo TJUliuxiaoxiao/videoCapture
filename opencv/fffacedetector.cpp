@@ -24,17 +24,18 @@ void FFFaceDetector::init()
     profileDetector = new cv::CascadeClassifier();
     //分配两个级联分类器对象（OpenCV中的Haar或LBP级联分类器），用于人脸检测。
     // 加载训练好的级联分类器模型
+    // int ret = faceDetector->
+    //           load("../videoCapture"
+    //         "/3rdparty/data/lbpcascades/lbpcascade_frontalface.xml");
     int ret = faceDetector->
-              load("../videoCapture"
-            "/3rdparty/data/lbpcascades/lbpcascade_frontalface.xml");
+              load("D:/codes/QT/videoCapture/videoCapture/3rdparty/data/lbpcascades/lbpcascade_frontalface.xml");
     //一个是LBP级联分类器用于正面人脸检测
     //另一个是Haar级联分类器用于侧面人脸检测。
     if(!ret){
         std::cerr<<"load lbpcascade_front.xml Fail!"<<std::endl;
         return;
     }
-    ret = profileDetector->load("../videoCapture"
-                                "/3rdparty/data/haarcascades/haarcascade_profileface.xml");
+    ret = profileDetector->load("D:/codes/QT/videoCapture/videoCapture/3rdparty/data/haarcascades/haarcascade_profileface.xml");
     if(!ret){
         std::cerr<<"load lbpcascade_profileface.xml Fail!"<<std::endl;
         return;

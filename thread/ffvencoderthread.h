@@ -2,6 +2,7 @@
 #define FFVENCODERTHREAD_H
 
 #include "ffthread.h"
+#include <mutex>
 extern "C"{
 #include <libavformat/avformat.h>
 }
@@ -39,6 +40,7 @@ private:
     AVRational frameRate;
     int64_t firstFramePts = 0;
     bool isFirstFrame = true;
+    std::mutex mutex;
 };
 
 #endif // FFVENCODERTHREAD_H

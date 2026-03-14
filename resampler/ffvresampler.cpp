@@ -13,7 +13,7 @@ FFVResampler::~FFVResampler(){
     }
     if(dstPars){
         delete dstPars;
-        vBuffer = nullptr;
+        dstPars = nullptr;
     }
     if(vBuffer){
         av_freep(&vBuffer);
@@ -46,7 +46,6 @@ void FFVResampler::init(FFVideoPars *srcPars_,FFVideoPars *dstPars_)
     std::cout<<"pixFmt"<<av_get_pix_fmt_name(dstPars->pixFmtEnum)<<std::endl;
 
     initSws();
-
 }
 
 void FFVResampler::resample(AVFrame *srcFrame, AVFrame **dstFrame)

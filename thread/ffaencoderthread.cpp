@@ -42,6 +42,7 @@ void FFAEncoderThread::run()
 {
 
     while(!m_stop){
+        std::lock_guard<std::mutex> lock(mutex);
         AVFrame* frame = frmQueue->dequeue();//取帧
         if(frame == nullptr){
             m_stop = true;
@@ -52,12 +53,18 @@ void FFAEncoderThread::run()
         }//流编号
         if(firstFrame){//第一帧
             firstFramePts = frame->pts;
+            //firstFramPts = 168406498292,非常大的一个数
             firstFrame = false;
             //第一帧的相对PTS为0
             aEncoder->encode(frame,streamIndex,0,audioTimeBase);
 
         }else{
+            //frame->pts = 168302857860
+            //audioTimeBase = 1/48000
             int64_t RelativePts = frame->pts - firstFramePts;
+            if(RelativePts<0){
+                std::cerr<<"RelativePts<0!"<<std::endl;
+            }
             aEncoder->encode(frame,streamIndex,RelativePts,audioTimeBase);
             //相对时间戳
         }

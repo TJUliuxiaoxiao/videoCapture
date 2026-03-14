@@ -32,11 +32,13 @@ void FFMuxer::addStream(AVCodecContext *codecCtx)
     }
     //设置时间基准
     stream->time_base = codecCtx->time_base;
+    //stream->time_base = 1/48000
     //根据codec_type区分音频和视频流
 
     if(codecCtx->codec_type == AVMEDIA_TYPE_AUDIO){//音频流
         aCodecCtx = codecCtx;
         aStream = stream;
+        //1/48000
         aStreamIndex = stream->index;
         hasAudio = true;
     }else if(codecCtx->codec_type==AVMEDIA_TYPE_VIDEO){//视频流
@@ -65,9 +67,15 @@ int FFMuxer::mux(AVPacket *packet)
     if(streamIndex == aStreamIndex){
         srcTimeBase = aCodecCtx->time_base;
         dstTimeBase = aStream->time_base;
+        std::cout<<"=======aStream========"<<std::endl;
+        std::cout<<"CodeTimeBase:"<<srcTimeBase.num<<"/"<<srcTimeBase.den<<std::endl;
+        std::cout<<"StreamTimeBase:"<<dstTimeBase.num<<"/"<<dstTimeBase.den<<std::endl;
     }else if(streamIndex == vStreamIndex){
         srcTimeBase = vCodecCtx->time_base;
         dstTimeBase = vStream->time_base;
+        std::cout<<"=======vStream========"<<std::endl;
+        std::cout<<"CodeTimeBase:"<<srcTimeBase.num<<"/"<<srcTimeBase.den<<std::endl;
+        std::cout<<"StreamTimeBase:"<<dstTimeBase.num<<"/"<<dstTimeBase.den<<std::endl;
     }else{
         return -1;
     }
@@ -184,7 +192,7 @@ void FFMuxer::close()
     trailerFlag = false;
     readyFlag = false;
     hasAudio = false;
-    hasAudio = false;
+    hasVideo = false;
     aStreamIndex = vStreamIndex = -1;
     streamCount = 0;
     aStream = nullptr;

@@ -42,7 +42,7 @@ int FFVEncoder::encode(AVFrame *frame, int streamIndex, int64_t pts, AVRational 
     //时间戳处理
     //将输入的时间戳从输入时间基准转换为编码器的时间基准
     pts = av_rescale_q(pts,timeBase,codecCtx->time_base);
-
+    //1/1000000->1/30
     //防止时间戳重复或不递增,解决时间戳回退问题
     if(pts<=lastPts){//修正时间戳,确保单调递增
         pts = lastPts + 1;
@@ -85,6 +85,7 @@ int FFVEncoder::encode(AVFrame *frame, int streamIndex, int64_t pts, AVRational 
         //情况4 成功接收到编码的数据包
         else{
             //设置数据包的流索引
+            pkt->time_base = codecCtx->time_base;
             pkt->stream_index = streamIndex;
             pktQueue->enqueue(pkt);
             av_packet_free(&pkt);
@@ -129,6 +130,8 @@ void FFVEncoder::initVideo(AVFrame *frame, AVRational fps)
     codecCtx = avcodec_alloc_context3(codec);
     if(codecCtx == nullptr){
         std::cerr<<"Alloc CodecCtx Fail!"<<std::endl;
+        delete vPars;
+        vPars =nullptr;
         return;// 返回但不清理vPars - 内存泄漏风险！
     }
     // 4. 配置编码器上下文的基本参数

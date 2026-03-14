@@ -6,6 +6,7 @@
 using namespace FFCaptureContextType;
 
 #define FF_AUDIO_TIME_BASE {1,48000}
+//时间基
 FFAFilter::FFAFilter() {}
 
 FFAFilter::~FFAFilter()
@@ -144,16 +145,16 @@ int FFAFilter::sendFilter(AVFrame* frame1,AVFrame* frame2,int64_t start,int64_t 
             av_frame_free(&filterFrame);
             return -1;
         }
-        encoderFrmQueue->enqueue(filterFrame);//将处理后的帧放入编码队列
+        // encoderFrmQueue->enqueue(filterFrame);//将处理后的帧放入编码队列
         //调整时间戳
         auto end = av_gettime_relative();
-        int64_t duration = (end - start);
-        // filterFrame->pts = av_gettime_relative()*10 +
-        //                    duration - pauseTime*10;
-        int64_t elapsed_us = av_gettime_relative()+duration - pauseTime;  // 假设 start 是录制开始时间（微秒）
-        filterFrame->pts = av_rescale_q(elapsed_us, (AVRational){1, 1000000}, FF_AUDIO_TIME_BASE);
-        // av_frame_unref(filterFrame);
-        // av_frame_free(&filterFrame);
+        int64_t duration =(end - start)*10;
+        // filterFrame->pts = av_gettime_relative() + duration - pauseTime;
+        filterFrame->pts = av_gettime_relative()*10+duration-pauseTime*10;
+        std::cout<<"filterFrame In afilter TimeBase"<<filterFrame->time_base.num<<"/"<<filterFrame->time_base.den<<std::endl;
+        encoderFrmQueue->enqueue(filterFrame);//将处理后的帧放入编码队列
+        av_frame_unref(filterFrame);
+        av_frame_free(&filterFrame);
     }
     av_frame_unref(frame1);
     av_frame_free(&frame1);
@@ -173,9 +174,9 @@ void FFAFilter::sendFrame(AVFrame *frame,int64_t start,int64_t pauseTime)
     // auto duration = (end - start);
     // frame->pts = av_gettime_relative()*10-duration-pauseTime*10;
     auto end = av_gettime_relative();
-    auto duration = (end - start);
-    int64_t elaped_us = av_gettime_relative()-duration-pauseTime;
-    frame->pts = av_rescale_q(elaped_us,(AVRational){1, 1000000}, FF_AUDIO_TIME_BASE);
+    auto duration = (end - start)*10;
+    int64_t elaped_us = av_gettime_relative()*10+duration-pauseTime*10;
+    frame->pts = elaped_us;
     encoderFrmQueue->enqueue(frame);
     av_frame_free(&frame);
 }
@@ -420,17 +421,18 @@ void FFAFilter::sendSingleFilter(AVFrame* frame,int64_t start,
             av_frame_free(&filterFrame);
             break;
         }
-        encoderFrmQueue->enqueue(filterFrame);
+        // encoderFrmQueue->enqueue(filterFrame);
         //调整时间戳
         auto end = av_gettime_relative();
-        int64_t duration = 10*(end-start);
-        filterFrame->pts = av_gettime_relative()+duration-pauseTime*10;
-        // av_frame_unref(filterFrame);
-        // av_frame_free(&filterFrame);
+        int64_t duration = (end-start)*10;
+        filterFrame->pts =av_gettime_relative()*10+ duration-pauseTime*10;
+        //av_gettime_relative()是当前时间，duration是音频帧持续的时间，pause是暂停时间
+        encoderFrmQueue->enqueue(filterFrame);
+        av_frame_unref(filterFrame);
+        av_frame_free(&filterFrame);
     }
     av_frame_unref(frame);
     av_frame_free(&frame);
-
 }
 
 
@@ -455,5 +457,4 @@ void FFAFilter::printError(int ret)
     else{
         std::cerr<<"Error:"<<errorBuffer<<std::endl;
     }
-
 }

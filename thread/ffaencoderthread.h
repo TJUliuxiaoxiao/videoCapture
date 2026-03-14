@@ -2,6 +2,7 @@
 #define FFAENCODERTHREAD_H
 
 #include "ffthread.h"
+#include <mutex>
 extern "C"{
 #include <libavformat/avformat.h>
 }
@@ -30,6 +31,7 @@ private:
     int streamIndex = -1;
     int64_t firstFramePts = 0;
     bool firstFrame = true;
+    std::mutex mutex;
 };
 
 #endif // FFAENCODERTHREAD_H

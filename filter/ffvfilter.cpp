@@ -5,6 +5,7 @@
 #include "queue/ffvframequeue.h"
 #define FF_VIDEO_FRAME_RATE {30,1}
 #define FF_VIDEO_TIME_BASE {1,10000000}
+//帧率,时间基
 FFVFilter::FFVFilter():overlayX(0),overlayY(0),overlayW(0),overlayH(0){
     overlayX = overlayY = overlayW = overlayH = 0;
 }
@@ -63,6 +64,10 @@ int FFVFilter::sendFilter(AVFrame *frame1, AVFrame *frame2)
             av_frame_free(&filterFrame);
             return -1;
         }
+        // 确保滤镜输出帧的时间戳正确设置
+        if (frame1->pts != AV_NOPTS_VALUE) {
+            filterFrame->pts = frame1->pts;
+        }
         encoderFrmQueue->enqueue(filterFrame);
 
     }
@@ -76,6 +81,10 @@ AVRational FFVFilter::getFrameRate()
 
 AVRational FFVFilter::getTimeBase()
 {
+    // 使用原始流的时间基准，而不是固定的FF_VIDEO_TIME_BASE
+    // if (stream1) {
+    //     return stream1->time_base;
+    // }
     return FF_VIDEO_TIME_BASE;
 }
 
@@ -100,8 +109,8 @@ void FFVFilter::sendEncodeFrame(AVFrame *frame)
         stream1 = vDecoder1->getStream();
     }
     encoderFrmQueue->enqueue(frame);
-    av_frame_unref(frame);
-    av_frame_free(&frame);
+    // av_frame_unref(frame);
+    // av_frame_free(&frame);
 }
 
 
@@ -120,10 +129,12 @@ void FFVFilter::initFilter(AVCodecContext *codecCtx1_, AVCodecContext *codecCtx2
     }
     // 初始化输入缓冲区滤镜
     createBufferFilter(&bufferCtx1, codecCtx1, stream1, "in1");
+    createBufferFilter(&bufferCtx2, codecCtx2, stream2, "in2");
     // 初始化输出sink滤镜
     createBufferSinkFilter();
     // 链接滤镜节点
     linkFilters(bufferCtx1, 0, bufferSinkCtx, 0);    // main输入 -> overlay主输入
+    linkFilters(bufferCtx2, 0, bufferSinkCtx, 1);
     // 启用自动格式转换
     avfilter_graph_set_auto_convert(filterGraph, AVFILTER_AUTO_CONVERT_ALL);
     // 配置滤镜图
@@ -201,6 +212,11 @@ void FFVFilter::createBufferSinkFilter()
         printError(ret);
         std::cerr<<"Create BufferSink Failed!"<<std::endl;
         return;
+    }
+    ret = av_opt_set_int_list(bufferSinkCtx, "pix_fmts", pixFmts, AV_PIX_FMT_NONE, AV_OPT_SEARCH_CHILDREN);
+    if (ret < 0) {
+       printError(ret);
+       std::cerr << "Set BufferSink pixel formats failed!" << std::endl;
     }
 }
 

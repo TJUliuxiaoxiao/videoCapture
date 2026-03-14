@@ -90,6 +90,7 @@ void FFVFrameQueue::clearQueue()
 
 AVFrame* FFVFrameQueue::peekQueue()
 {
+    std::lock_guard<std::mutex> lock(mutex);
     return frmQueue.empty()?nullptr:frmQueue.front();
 
 }

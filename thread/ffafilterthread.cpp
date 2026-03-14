@@ -139,7 +139,6 @@ void FFAFilterThread::run()
             cond.wait_for(lock,std::chrono::milliseconds(100));
             continue;
         }
-        // int64_t start = av_gettime_relative()*10;
         int64_t start = av_gettime_relative();
 
         //混音:[声卡] + [麦克风]

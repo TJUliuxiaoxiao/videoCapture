@@ -16,6 +16,9 @@ FFPacket *FFVPacketQueue::dequeue()
     cond.wait(lock,[this](){
         return (!pktQueue.empty())||m_stop.load()==true;//向下执行的条件
     });//wait阻塞直到满足某个条件
+    if(m_stop.load()){
+        return nullptr;
+    }
     FFPacket* ffpkt = pktQueue.front();
     pktQueue.pop();
     //然后呢?
@@ -89,7 +92,7 @@ void FFVPacketQueue::enqueueNull()
 
 void FFVPacketQueue::flushQueue()
 {//刷新队列
-    std::lock_guard<std::mutex> lock(mutex);
+    // std::lock_guard<std::mutex> lock(mutex);
     std::cout << "[flushQueue] before flush, size=" << pktQueue.size() << std::endl;
     while(true){
         FFPacket* pkt = peekQueue();

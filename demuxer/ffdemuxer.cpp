@@ -51,15 +51,17 @@ int FFDemuxer::demux()
         if(ret == AVERROR_EOF){//到达文件末尾
             if(aPktQueue){
                 aPktQueue->enqueueNull();
-                av_packet_unref(packet);
-                av_packet_free(&packet);
+                // av_packet_unref(packet);
+                // av_packet_free(&packet);
             }
             if(vPktQueue){
 
                 vPktQueue->enqueueNull();
-                av_packet_unref(packet);
-                av_packet_free(&packet);
+                // av_packet_unref(packet);
+                // av_packet_free(&packet);
             }
+            av_packet_unref(packet);
+            av_packet_free(&packet);
             std::cout<<"AVERROR_EOF"<<std::endl;
             return 1;
         }

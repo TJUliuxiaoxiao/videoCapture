@@ -304,15 +304,17 @@ void FFVFilterThread::run()
         //编码帧生成
         if(hasEncoder&&!hasPause){
             std::unique_lock<std::mutex> lock(mutex);
-            //overlayProcessor->getOverlayFrame() 返回当前背景
-            //图像（所有图层合成后的结果）的 AVFrame
+            //overlayProcessor->getOverlayFrame() 返回当前背景图像（所有图层合成后的结果）的 AVFrame
             AVFrame* encodeFrame = overlayProcessor->getOverlayFrame();
             auto end = av_gettime_relative();
-            // int64_t duration = (end - start) * 10;
-            int64_t duration = (end - start);
-            overlayPts = av_gettime_relative()+duration-pauseTime;
-            encodeFrame->pkt_dts = av_rescale_q(overlayDts, (AVRational){1, 1000000}, (AVRational){1, 30});
-            encodeFrame->pts = av_rescale_q(overlayPts, (AVRational){1, 1000000}, (AVRational){1, 30});
+            int64_t duration = (end - start)*10;
+            overlayPts = av_gettime_relative()*10 + duration-pauseTime*10;
+            //av_gettime_relative()当前时间,duration:一帧持续的时间,pauseTime:暂停的时间
+            encodeFrame->time_base = AVRational{1,10000000};
+            encodeFrame->pkt_dts = overlayDts;
+            encodeFrame->pts = overlayPts;
+            //pts0 = 173813088838
+            //pts1 = 173832438186
             filter->sendEncodeFrame(encodeFrame);
             overlayProcessor->resetBackground();
         }

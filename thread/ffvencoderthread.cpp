@@ -44,6 +44,7 @@ void FFVEncoderThread::wakeAllThread()
 
 void FFVEncoderThread::run()
 {   while(!m_stop){
+        std::lock_guard<std::mutex> lock(mutex);
         AVFrame* frame = frmQueue->dequeue();
         if(frame==nullptr){
             m_stop = true;
@@ -57,6 +58,9 @@ void FFVEncoderThread::run()
             isFirstFrame = false;
             vEncoder->encode(frame,streamIndex,0,videoTimeBase);
         }else{
+            //0-firstFramPts =负值？
+            //如何保证framePts能够递增
+            //174476838612-174554202180?怎么解决？
             int64_t relativePts = frame->pts - firstFramePts;
             vEncoder->encode(frame,streamIndex,relativePts,videoTimeBase);
         }

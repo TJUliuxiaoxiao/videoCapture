@@ -127,8 +127,10 @@ int FFAEncoder::encode(AVFrame* frame,int streamIndex,int64_t pts,AVRational tim
     pts: 显示时间戳，表示该帧的显示时间。
     timeBase: 时间基，用于时间戳的计算。
     */
-    Q_UNUSED(pts);
-    Q_UNUSED(timeBase);
+    // int64_t base_pts = pts;
+
+    // Q_UNUSED(pts);
+    // Q_UNUSED(timeBase);
     std::lock_guard<std::mutex> lock(mutex);
     if(frame == nullptr || codecCtx == nullptr){
         std::cout<<"nullptr"<<std::endl;
@@ -160,10 +162,15 @@ int FFAEncoder::encode(AVFrame* frame,int streamIndex,int64_t pts,AVRational tim
         AVFrame* sub_frame = av_frame_alloc();//分配子帧
         sub_frame->format = codecCtx->sample_fmt;
         sub_frame->ch_layout = codecCtx->ch_layout;
-        // sub_frame->ch_layout.nb_channels = codecCtx->ch_layout.nb_channels;
+        sub_frame->ch_layout.nb_channels = codecCtx->ch_layout.nb_channels;
+        /*累加原始时间戳*/
+        // int64_t sub_pts = base_pts + i*frame_size;
+        //如果需要，转换到编码器的时间基
+        // sub_pts = av_rescale_q(sub_pts,timeBase,codecCtx->time_base);
         sub_frame->sample_rate = codecCtx->sample_rate;
         sub_frame->nb_samples = frame_size;
         sub_frame->pts = pendingFrame.next_pts + i * frame_size;//以采样点为单位计算的时间戳
+        // sub_frame->pts = sub_pts;
         av_frame_get_buffer(sub_frame,0);
         // 逐通道复制数据到子帧
         for(int ch = 0;ch<sub_frame->ch_layout.nb_channels;++ch){
@@ -193,6 +200,7 @@ int FFAEncoder::encode(AVFrame* frame,int streamIndex,int64_t pts,AVRational tim
     // 4.更新缓存
     pendingFrame.next_pts = pendingFrame.next_pts +
                             total_full_frames * frame_size;
+    // pendingFrame.next_pts = base_pts + total_full_frames*frame_size;
     pendingFrame.samples = remaining_samples;
     for(int ch = 0;ch < codecCtx->ch_layout.nb_channels;++ch){
         pendingFrame.data[ch].resize(remaining_samples * bytes_per_sample);

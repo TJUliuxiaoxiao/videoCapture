@@ -11,23 +11,19 @@ FFADecoder::~FFADecoder()
 {
     close();
 }
-
-
-
 void FFADecoder::init(AVStream *stream_,FFAFrameQueue* frmQueue_)
 {
     std::lock_guard<std::mutex> lock(mutex);
     m_stop = false;//m_stop原子布尔标志，用于安全地通知解码线程停止
     stream = stream_;//要解码的音频流
     frmQueue = frmQueue_;//用于存放解码后的AVFrame*
-    if(stream->codecpar==nullptr){
+    if(stream==nullptr||stream->codecpar==nullptr){
         return;//
     }
     const AVCodec* codec =
         avcodec_find_decoder(stream->codecpar->codec_id);
     //调用avcodec_find_decoder获得编码器
     //根据stream->codecpar->codec_id
-
     if(codec == nullptr){
         std::cerr<<"找不到视频解码器"<<std::endl;
         return;
@@ -35,13 +31,11 @@ void FFADecoder::init(AVStream *stream_,FFAFrameQueue* frmQueue_)
 
     //分配解码器上下文
     codecCtx = avcodec_alloc_context3(codec);
-
     if(codecCtx==nullptr){
         std::cerr<<"分配解码器上下文失败"<<std::endl;
         avcodec_free_context(&codecCtx);
         return;//失败则释放并返回
     }
-
     //复制参数,将流中的编码参数复制到codecCtx上下文，失败则打印错误、释放上下文
     int ret = avcodec_parameters_to_context(codecCtx,stream->codecpar);
     if(ret<0){
@@ -75,8 +69,8 @@ FFAudioPars *FFADecoder::getAudioPars()
 
 int FFADecoder::getTotalsec()
 {
-    return static_cast<int>(0.5 + stream->duration*av_q2d(stream->time_base)*1e3);
-    // return static_cast<int>(0.5 + stream->duration*av_q2d(stream->time_base));
+    // return static_cast<int>(0.5 + stream->duration*av_q2d(stream->time_base)*1e3);
+    return static_cast<int>(0.5 + stream->duration*av_q2d(stream->time_base));
 }
 
 void FFADecoder::wakeAllThread()
@@ -254,7 +248,6 @@ void FFADecoder::printFmt()
     std::cout<<"channels:"<<aPars->nbChannels<<std::endl;
     std::cout<<"time_base:"<<aPars->timeBase.num<<"/"
               <<aPars->timeBase.den<<std::endl;
-
     std::cout<<"============================================="<<std::endl;
     std::cout<<"audio format:"
               <<av_get_sample_fmt_name(swraPars->aFormatEnum)<<std::endl;

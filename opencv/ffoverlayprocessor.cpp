@@ -49,8 +49,8 @@ void FFOverlayProcessor::overlayImage(cv::Mat &foreground, int x, int y, int w, 
     //确定叠加区域的边界
     int x1 = std::max(x,0);
     int y1 = std::max(y,0);
-    int x2 = std::max(x+w,background.cols);
-    int y2 = std::max(y+h,background.rows);
+    int x2 = std::min(x+w,background.cols);
+    int y2 = std::min(y+h,background.rows);
 
     //检查叠加区域是否有效
     if(x1>=x2||y1>=y2)return;
